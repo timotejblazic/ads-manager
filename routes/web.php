@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialMediaAccountController;
 use Illuminate\Foundation\Application;
@@ -42,31 +43,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/social-accounts/{socialMediaAccount}', [SocialMediaAccountController::class, 'destroy'])->name('social-accounts.destroy');
 });
 
+Route::get('auth/facebook', [FacebookController::class, 'redirectToFacebook'])->name('auth.facebook');
+Route::get('auth/facebook/callback', [FacebookController::class, 'handleFacebookCallback']);
+
+Route::get('api/haha', [FacebookController::class, 'fetchAdAccounts']);
+
 
 // Mock API
-Route::get('/mock-api/ad-accounts', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ad_accounts.json'))));
-});
-
-Route::get('/mock-api/campaigns', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_campaigns.json'))));
-});
-
-Route::get('/mock-api/adsets', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_adsets.json'))));
-});
-
-Route::get('/mock-api/ads', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ads.json'))));
-});
-
-Route::get('/mock-api/adcreatives', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ad_creatives.json'))));
-});
-
-Route::get('/mock-api/insights', function () {
-    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_insights.json'))));
-});
+//Route::get('/mock-api/ad-accounts', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ad_accounts.json'))));
+//});
+//
+//Route::get('/mock-api/campaigns', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_campaigns.json'))));
+//});
+//
+//Route::get('/mock-api/adsets', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_adsets.json'))));
+//});
+//
+//Route::get('/mock-api/ads', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ads.json'))));
+//});
+//
+//Route::get('/mock-api/adcreatives', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_ad_creatives.json'))));
+//});
+//
+//Route::get('/mock-api/insights', function () {
+//    return response()->json(json_decode(file_get_contents(resource_path('data/mock/fake_insights.json'))));
+//});
 
 
 require __DIR__.'/auth.php';
